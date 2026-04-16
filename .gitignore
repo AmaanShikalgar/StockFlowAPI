@@ -1,8 +1,8 @@
 # Python
 __pycache__/
 *.pyc
-venv/
 myenv/
+venv/
 .env
 
 # Node
@@ -13,3 +13,6 @@ build/
 # IDE
 .vscode/
 .idea/
+
+# OS
+.DS_Store
