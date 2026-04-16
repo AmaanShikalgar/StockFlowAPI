@@ -48,7 +48,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://stock-flow-api.vercel.app/"
+        "https://stock-flow-api.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
