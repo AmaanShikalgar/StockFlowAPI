@@ -1,26 +1,18 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI , Depends
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+
 from backend.models import Product
 from backend.database import session, engine
 import backend.database_models as database_models
-from sqlalchemy.orm import Session
 
-app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 
 database_models.Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-def greet():
-    return "welcome to Telusko Trac"
+
 
 products = [
     Product(id=1,name="Phone", description="A budget phone", price=99.9,quantity=10),
@@ -38,7 +30,7 @@ def get_db():
     
 def init_db():
     db = session()
-    count = db.query(database_models.Product).count
+    count = db.query(database_models.Product).count()
     
     if count == 0:
         for product in products:
@@ -46,11 +38,23 @@ def init_db():
         db.commit()
         
 @asynccontextmanager
-def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI):
     init_db()
     yield
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def greet():
+    return "welcome to Telusko Trac"
     
 @app.get("/products")
 def get_all_products(db: Session = Depends(get_db)): 
