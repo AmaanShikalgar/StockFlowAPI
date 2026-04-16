@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI , Depends
 from fastapi.middleware.cors import CORSMiddleware
 from backend.models import Product
@@ -44,7 +45,12 @@ def init_db():
             db.add(database_models.Product(**product.model_dump()))
         db.commit()
         
-init_db()
+@asynccontextmanager
+def lifespan(app: FastAPI):
+    init_db()
+    yield
+
+app = FastAPI(lifespan=lifespan)
     
 @app.get("/products")
 def get_all_products(db: Session = Depends(get_db)): 
