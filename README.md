@@ -1,163 +1,130 @@
-# 🚀 StockFlowAPI (Full Stack)
+# 📦 StockFlowAPI
 
-A full-stack web application built using **FastAPI**, **PostgreSQL**, and a frontend interface.
-This project demonstrates CRUD operations, API design, database integration, and full-stack development.
-
----
-
-## 📌 Features
-
-* 🔹 RESTful API with FastAPI
-* 🔹 CRUD operations (Create, Read, Update, Delete)
-* 🔹 Data validation using Pydantic
-* 🔹 PostgreSQL integration with SQLAlchemy
-* 🔹 Full-stack setup (Frontend + Backend)
-* 🔹 Interactive API docs (Swagger UI)
-* 🔹 Clean and modular project structure
+A full-stack inventory management system built using FastAPI, PostgreSQL, SQLAlchemy, and a React frontend. It supports full CRUD operations on products and demonstrates backend API development with database integration.
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Features
 
-### Backend
-
-* FastAPI
-* SQLAlchemy
-* PostgreSQL
-* Pydantic
-* Uvicorn
-
-### Frontend
-
-* (Add your frontend tech here: React / HTML-CSS-JS)
+- Create, Read, Update, Delete (CRUD) operations for products  
+- RESTful API built using FastAPI  
+- PostgreSQL database integration using SQLAlchemy ORM  
+- Data validation using Pydantic  
+- CORS enabled for frontend integration  
+- Auto database initialization with seed data  
+- Modular backend structure  
+- React frontend for UI interaction  
 
 ---
 
-## ⚙️ Installation & Setup
+## 🏗️ Tech Stack
 
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/AmaanShikalgar/fastapi-product-api.git
-cd fastapi-product-api
-```
+Backend: FastAPI, SQLAlchemy, PostgreSQL, Pydantic, Uvicorn  
+Frontend: React (Vite/CRA), Axios / Fetch API, HTML, CSS  
 
 ---
 
-### 2. Backend Setup
+## 📁 Project Structure
 
-```bash
-cd backend   # if backend folder exists
-python -m venv myenv
-myenv\Scripts\activate   # Windows
-pip install -r requirements.txt
-```
-
----
-
-### 3. Configure Database
-
-Update your database URL in `database.py`:
-
-```python
-db_url = "postgresql://postgres:yourpassword@127.0.0.1:5432/mydb"
-```
-
-> Make sure PostgreSQL is running and the database exists.
+StockFlowAPI/  
+├── backend/  
+│   ├── main.py  
+│   ├── database.py  
+│   ├── models.py  
+│   ├── database_models.py  
+│   ├── .env  
+│   └── venv/  
+│  
+├── frontend/  
+│   ├── src/  
+│   ├── public/  
+│   ├── package.json  
+│   └── node_modules/  
+│  
+├── README.md  
 
 ---
 
-### 4. Run Backend Server
+## ⚙️ Setup Instructions
 
-```bash
-uvicorn main:app --reload
-```
-
-Backend runs at:
-
-```
-http://127.0.0.1:8000
-```
-
-Swagger Docs:
-
-```
-http://127.0.0.1:8000/docs
-```
+### Clone the repository
+git clone https://github.com/your-username/StockFlowAPI.git  
+cd StockFlowAPI  
 
 ---
 
-### 5. Frontend Setup
+### Backend Setup
+cd backend  
+python -m venv venv  
+venv\Scripts\activate  
 
-```bash
-cd frontend
-npm install
-npm start
-```
+pip install -r requirements.txt  
+
+Create .env file:  
+DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/yourdbname  
+
+Run backend:  
+uvicorn main:app --reload  
+
+Backend URL: http://127.0.0.1:8000  
+API Docs: http://127.0.0.1:8000/docs  
 
 ---
 
-## 📂 Project Structure
+### Frontend Setup
+cd frontend  
+npm install  
+npm run dev  
 
-```
-fastapi-product-api/
-│── backend/
-│   ├── main.py
-│   ├── database.py
-│   ├── models.py
-│   ├── schemas.py
-│
-│── frontend/
-│   ├── src/
-│   ├── public/
-│
-│── requirements.txt
-│── .gitignore
-│── README.md
-```
+Frontend URL: http://localhost:3000  
 
 ---
 
 ## 🔗 API Endpoints
 
-| Method | Endpoint       | Description       |
-| ------ | -------------- | ----------------- |
-| GET    | /products      | Get all products  |
-| GET    | /products/{id} | Get product by ID |
-| POST   | /products      | Create product    |
-| PUT    | /products/{id} | Update product    |
-| DELETE | /products/{id} | Delete product    |
+GET /products → Get all products  
+GET /products/{id} → Get product by ID  
+POST /products → Add new product  
+PUT /products/{id} → Update product  
+DELETE /products/{id} → Delete product  
 
 ---
 
-## 🧠 Learnings
+## 🧠 Environment Variables
 
-* Built REST APIs using FastAPI
-* Implemented ORM with SQLAlchemy
-* Used Pydantic for data validation
-* Integrated PostgreSQL database
-* Connected frontend with backend APIs
-* Debugged real-world backend issues (authentication, constraints, etc.)
+Create a .env file in backend:
+
+DATABASE_URL=postgresql://username:password@localhost:5432/dbname  
 
 ---
 
-## 🚀 Future Improvements
+## ❗ Common Issues
 
-* Add JWT Authentication
-* Implement pagination & filtering
-* Dockerize the application
-* Deploy using CI/CD pipelines
+- If dotenv error occurs → pip install python-dotenv  
+- If DB fails → check PostgreSQL running + correct password + port  
+- If CORS error → ensure allow_origins includes frontend URL  
+
+---
+
+## 📌 Production Improvements
+
+- Add Alembic migrations  
+- Move seed data out of main.py  
+- Use environment variables everywhere  
+- Add authentication  
+- Add logging  
+- Dockerize application  
+- Add pagination for APIs  
+- Remove hardcoded credentials  
 
 ---
 
 ## 👨‍💻 Author
 
-**Amaan Shikalgar**
-
-* GitHub: https://github.com/AmaanShikalgar
+Amaan Shikalgar  
 
 ---
 
-## ⭐ Support
+## 📜 License
 
-If you found this project useful, consider giving it a ⭐ on GitHub!
+MIT License
