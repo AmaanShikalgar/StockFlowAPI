@@ -20,7 +20,7 @@
 ## 📸 Project Preview
 
 <p align="center">
-  <img src="frontend/screenshots/dashboard.png" width="80%"/>
+  <img src="./frontend/screenshots/demo.png" width="80%"/>
 </p>
 
 ## ⚡ Features
