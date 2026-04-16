@@ -20,7 +20,7 @@
 ## 📸 Project Preview
 
 <p align="center">
-  <img src="https://via.placeholder.com/900x450.png?text=Add+Your+Frontend+Screenshot+Here" width="80%"/>
+  <img src="frontend/screenshots/dashboard.png" width="80%"/>
 </p>
 
 ## ⚡ Features
