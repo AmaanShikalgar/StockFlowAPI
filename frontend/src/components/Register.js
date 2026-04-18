@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "./api"; // ✅ use centralized axios instance
+import api from "../api"; // ✅ use centralized axios instance
 
 function Register() {
   const [email, setEmail] = useState("");
