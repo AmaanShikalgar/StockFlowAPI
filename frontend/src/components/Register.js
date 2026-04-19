@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api"; // ✅ use centralized axios instance
+import api from "../api";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -22,28 +22,29 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <form onSubmit={handleRegister} className="auth-form">
+      <h2 className="auth-heading">Create Account</h2>
 
-      <form onSubmit={handleRegister}>
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
+      <input
+        type="email"
+        placeholder="Enter your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
 
-        <input
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
+      <input
+        type="password"
+        placeholder="Enter your password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
 
-        <button type="submit">Register</button>
-      </form>
-    </div>
+      <button className="btn" type="submit">
+        Register
+      </button>
+    </form>
   );
 }
 

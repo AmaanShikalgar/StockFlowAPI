@@ -204,30 +204,41 @@ function App() {
 
     {/* 🔐 AUTH CHECK */}
     {!token ? (
-      <div style={{ padding: "40px", textAlign: "center" }}>
-        <h1>Stock Overflow 🔐</h1>
+  <div className="auth-container">
+    <div className="auth-card">
+      <h1 className="auth-title">📦 Stock Overflow</h1>
+      <p className="auth-subtitle">Manage your inventory smartly</p>
 
-        <div style={{ marginBottom: "20px" }}>
-          <button onClick={() => setAuthView("login")}>
-            Login
-          </button>
-          <button onClick={() => setAuthView("register")}>
-            Register
-          </button>
-        </div>
+      <div className="auth-tabs">
+        <button
+          className={authView === "login" ? "active" : ""}
+          onClick={() => setAuthView("login")}
+        >
+          Login
+        </button>
 
-        {authView === "login" && (
-          <Login
-            onLogin={(jwt) => {
-              localStorage.setItem("token", jwt);
-              setToken(jwt);
-            }}
-          />
-        )}
-
-        {authView === "register" && <Register />}
+        <button
+          className={authView === "register" ? "active" : ""}
+          onClick={() => setAuthView("register")}
+        >
+          Register
+        </button>
       </div>
-    ) : (
+
+      {/* ✅ MOVE INSIDE */}
+      {authView === "login" && (
+        <Login
+          onLogin={(jwt) => {
+            localStorage.setItem("token", jwt);
+            setToken(jwt);
+          }}
+        />
+      )}
+
+      {authView === "register" && <Register />}
+    </div>
+  </div>
+) : (
       <>
         {/* 🔵 HEADER */}
         <header className="topbar">
