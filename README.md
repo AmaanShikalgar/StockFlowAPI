@@ -1,4 +1,4 @@
-# 🚀 StockFlowAPI
+#  StockFlowAPI
 
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0ea5e9,100:1e293b&height=200&section=header&text=StockFlowAPI&fontSize=40&fontColor=ffffff&animation=fadeIn" />
@@ -26,22 +26,22 @@
 
 ## ⚡ Features
 
-* 🔐 JWT Authentication (Login & Register)
-* 🛡️ Protected API routes
-* 📦 Full CRUD operations on products
-* ⚡ FastAPI high-performance backend
-* 🐘 PostgreSQL database integration
-* 🧠 SQLAlchemy ORM
-* ✅ Pydantic validation
-* ⚛️ React frontend with modern UI
-* 🎨 Clean and responsive UI (Auth + Dashboard)
-* 🔎 Search, filter & sort products
-* 🔄 Real-time UI updates after CRUD
-* 🌐 Deployed backend (Render)
+*  JWT Authentication (Login & Register)
+*  Protected API routes
+*  Full CRUD operations on products
+*  FastAPI high-performance backend
+*  PostgreSQL database integration
+*  SQLAlchemy ORM
+*  Pydantic validation
+*  React frontend with modern UI
+*  Clean and responsive UI (Auth + Dashboard)
+*  Search, filter & sort products
+*  Real-time UI updates after CRUD
+*  Deployed backend (Render)
 
 ---
 
-## 🧠 Tech Stack
+##  Tech Stack
 
 **Backend:**
 FastAPI, SQLAlchemy, PostgreSQL, Pydantic, Uvicorn, JWT Authentication
@@ -59,7 +59,7 @@ StockFlowAPI
 │   ├── main.py
 │   ├── database.py
 │   ├── models.py
-│   ├── auth.py
+│   ├── security.py
 │   ├── routes/
 │   ├── .env (ignored)
 │
@@ -77,7 +77,7 @@ StockFlowAPI
 
 ---
 
-## 🚀 API Endpoints
+##  API Endpoints
 
 ### 🔐 Auth
 
@@ -94,7 +94,7 @@ StockFlowAPI
 
 ---
 
-## ⚙️ Setup Instructions
+##  Setup Instructions
 
 ### 🔹 Clone repo
 
@@ -144,7 +144,7 @@ Frontend → http://localhost:3000
 
 ---
 
-## 🔐 Authentication Flow
+##  Authentication Flow
 
 1. User registers → credentials stored securely
 2. User logs in → receives JWT token
@@ -154,15 +154,15 @@ Frontend → http://localhost:3000
 
 ---
 
-## 🧠 Learnings
+##  Learnings
 
-* 🔐 Implemented JWT authentication in FastAPI
-* ⚡ Built scalable REST APIs with proper structure
-* 🐘 Integrated PostgreSQL with SQLAlchemy ORM
-* 🔗 Connected React frontend with secured backend
-* 🎨 Designed modern UI with clean UX
-* 🐞 Debugged real-world deployment & CORS issues
-* 🚀 Managed full-stack project deployment
+*  Implemented JWT authentication in FastAPI
+*  Built scalable REST APIs with proper structure
+*  Integrated PostgreSQL with SQLAlchemy ORM
+*  Connected React frontend with secured backend
+*  Designed modern UI with clean UX
+*  Debugged real-world deployment & CORS issues
+*  Managed full-stack project deployment
 
 ---
 
