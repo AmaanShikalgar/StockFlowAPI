@@ -1,8 +1,8 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI , Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
 from jose import JWTError, jwt
+from sqlalchemy.orm import Session
 from backend.models import Product, UserCreate, UserLogin
 from backend.database import session, engine, get_db
 import backend.database_models as database_models
@@ -62,7 +62,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://stock-flow-by452d70f-amaan-shikalgars-projects.vercel.app"
+        "https://stock-flow-api.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
