@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
+import api from "./api";
 import "./App.css";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import TaglineSection from "./TaglineSection";
-
-const api = axios.create({
-  baseURL: "https://stockflowapi-1-e2hb.onrender.com",
-});
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -148,7 +144,7 @@ function App() {
         });
         setMessage("Product updated successfully");
       } else {
-        await api.post("/products/", {
+        await api.post("/products", {
           ...form,
           id: Number(form.id),
           price: Number(form.price),
