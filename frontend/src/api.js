@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://stockflowapi-1-e2hb.onrender.com",
+  baseURL: "https://stockflowapi-yvbr.onrender.com",
 });
 
 api.interceptors.request.use((config) => {
