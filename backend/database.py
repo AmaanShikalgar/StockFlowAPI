@@ -2,6 +2,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
 
 load_dotenv()
 
@@ -14,3 +18,10 @@ session = sessionmaker(
     autoflush=False,
     bind=engine
     )
+
+def get_db():
+    db = session()
+    try:
+        yield db
+    finally:
+        db.close()

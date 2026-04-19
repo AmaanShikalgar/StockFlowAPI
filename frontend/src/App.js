@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
+import api from "./api";
 import "./App.css";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import TaglineSection from "./TaglineSection";
-
-const api = axios.create({
-  baseURL: "https://stockflowapi-yvbr.onrender.com",
-});
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -23,6 +21,8 @@ function App() {
   const [filter, setFilter] = useState("");
   const [sortField, setSortField] = useState("id");
   const [sortDirection, setSortDirection] = useState("asc");
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [authView, setAuthView] = useState("login");
 
   // Auto-dismiss messages after 5 seconds
   useEffect(() => {
@@ -144,7 +144,7 @@ function App() {
         });
         setMessage("Product updated successfully");
       } else {
-        await api.post("/products/", {
+        await api.post("/products", {
           ...form,
           id: Number(form.id),
           price: Number(form.price),
@@ -194,179 +194,294 @@ function App() {
   const currency = (n) =>
     typeof n === "number" ? n.toFixed(2) : Number(n || 0).toFixed(2);
 
+  const handleLogout = () => {
+  localStorage.removeItem("token");
+  setToken(null);
+  };
+
   return (
-    <div className="app-bg">
-      <header className="topbar">
-        <div className="brand">
-          <span className="brand-badge">📦</span>
-          <h1>Stock Overflow</h1>
-        </div>
-        <div className="top-actions">
-          <button className="btn btn-light" onClick={fetchProducts} disabled={loading}>
-            Refresh
-          </button>
-        </div>
-      </header>
+  <div className="app-bg">
 
-      <div className="container">
-        <div className="stats">
-          <div className="chip">Total: {products.length}</div>
-          <div className="search">
-            <input
-              type="text"
-              placeholder="Search by id, name or description..."
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-            />
-          </div>
-        </div>
+    {/* 🔐 AUTH CHECK */}
+    {!token ? (
+  <div className="auth-container">
+    <div className="auth-card">
+      <h1 className="auth-title">📦 Stock Overflow</h1>
+      <p className="auth-subtitle">Manage your inventory smartly</p>
 
-        <div className="content-grid">
-          <div className="card form-card">
-            <h2>{editId ? "Edit Product" : "Add Product"}</h2>
-            <form onSubmit={handleSubmit} className="product-form">
-              <input
-                type="number"
-                name="id"
-                placeholder="ID"
-                value={form.id}
-                onChange={handleChange}
-                required
-                disabled={!!editId}
-              />
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={form.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                name="description"
-                placeholder="Description"
-                value={form.description}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="number"
-                name="price"
-                placeholder="Price"
-                value={form.price}
-                onChange={handleChange}
-                required
-                step="0.01"
-              />
-              <input
-                type="number"
-                name="quantity"
-                placeholder="Quantity"
-                value={form.quantity}
-                onChange={handleChange}
-                required
-              />
-              <div className="form-actions">
-                <button className="btn" type="submit" disabled={loading}>
-                  {editId ? "Update" : "Add"}
-                </button>
-                {editId && (
-                  <button
-                    className="btn btn-secondary"
-                    type="button"
-                    onClick={() => {
-                      resetForm();
-                      setMessage("");
-                      setError("");
-                    }}
-                  >
-                    Cancel
-                  </button>
-                )}
-              </div>
-            </form>
-            {message && <div className="success-msg">{message}</div>}
-            {error && <div className="error-msg">{error}</div>}
-          </div>
-          
-          <TaglineSection />
+      <div className="auth-tabs">
+        <button
+          className={authView === "login" ? "active" : ""}
+          onClick={() => setAuthView("login")}
+        >
+          Login
+        </button>
 
-          <div className="card list-card">
-            <h2>Products</h2>
-            {loading ? (
-              <div className="loader">Loading...</div>
-            ) : (
-              <div className="scroll-x">
-                <table className="product-table">
-                  <thead>
-                    <tr>
-                      <th 
-                        className={`sortable ${sortField === 'id' ? `sort-${sortDirection}` : ''}`}
-                        onClick={() => handleSort('id')}
-                      >
-                        ID
-                      </th>
-                      <th 
-                        className={`sortable ${sortField === 'name' ? `sort-${sortDirection}` : ''}`}
-                        onClick={() => handleSort('name')}
-                      >
-                        Name
-                      </th>
-                      <th>Description</th>
-                      <th 
-                        className={`sortable ${sortField === 'price' ? `sort-${sortDirection}` : ''}`}
-                        onClick={() => handleSort('price')}
-                      >
-                        Price
-                      </th>
-                      <th 
-                        className={`sortable ${sortField === 'quantity' ? `sort-${sortDirection}` : ''}`}
-                        onClick={() => handleSort('quantity')}
-                      >
-                        Quantity
-                      </th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredProducts.map((p) => (
-                      <tr key={p.id}>
-                        <td>{p.id}</td>
-                        <td className="name-cell">{p.name}</td>
-                        <td className="desc-cell" title={p.description}>{p.description}</td>
-                        <td className="price-cell">${currency(p.price)}</td>
-                        <td>
-                          <span className="qty-badge">{p.quantity}</span>
-                        </td>
-                        <td>
-                          <div className="row-actions">
-                            <button className="btn btn-edit" onClick={() => handleEdit(p)}>
-                              Edit
-                            </button>
-                            <button className="btn btn-delete" onClick={() => handleDelete(p.id)}>
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                    {filteredProducts.length === 0 && (
-                      <tr>
-                        <td colSpan={6} className="empty">
-                          No products found.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </div>
+        <button
+          className={authView === "register" ? "active" : ""}
+          onClick={() => setAuthView("register")}
+        >
+          Register
+        </button>
       </div>
+
+      {/* ✅ MOVE INSIDE */}
+      {authView === "login" && (
+        <Login
+          onLogin={(jwt) => {
+            localStorage.setItem("token", jwt);
+            setToken(jwt);
+          }}
+        />
+      )}
+
+      {authView === "register" && <Register />}
     </div>
-  );
+  </div>
+) : (
+      <>
+        {/* 🔵 HEADER */}
+        <header className="topbar">
+          <div className="brand">
+            <span className="brand-badge">📦</span>
+            <h1>Stock Overflow</h1>
+          </div>
+
+          <div className="top-actions">
+            <button
+              className="btn btn-light"
+              onClick={fetchProducts}
+              disabled={loading}
+            >
+              Refresh
+            </button>
+
+            <button
+              className="btn btn-delete"
+              onClick={() => {
+                localStorage.removeItem("token");
+                setToken(null);
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        </header>
+
+        {/* 🔵 MAIN CONTAINER */}
+        <div className="container">
+          <div className="stats">
+            <div className="chip">Total: {products.length}</div>
+            <div className="search">
+              <input
+                type="text"
+                placeholder="Search by id, name or description..."
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="content-grid">
+            <div className="card form-card">
+              <h2>{editId ? "Edit Product" : "Add Product"}</h2>
+
+              <form onSubmit={handleSubmit} className="product-form">
+                <input
+                  type="number"
+                  name="id"
+                  placeholder="ID"
+                  value={form.id}
+                  onChange={handleChange}
+                  required
+                  disabled={!!editId}
+                />
+
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+
+                <input
+                  type="text"
+                  name="description"
+                  placeholder="Description"
+                  value={form.description}
+                  onChange={handleChange}
+                  required
+                />
+
+                <input
+                  type="number"
+                  name="price"
+                  placeholder="Price"
+                  value={form.price}
+                  onChange={handleChange}
+                  required
+                  step="0.01"
+                />
+
+                <input
+                  type="number"
+                  name="quantity"
+                  placeholder="Quantity"
+                  value={form.quantity}
+                  onChange={handleChange}
+                  required
+                />
+
+                <div className="form-actions">
+                  <button className="btn" type="submit" disabled={loading}>
+                    {editId ? "Update" : "Add"}
+                  </button>
+
+                  {editId && (
+                    <button
+                      className="btn btn-secondary"
+                      type="button"
+                      onClick={() => {
+                        resetForm();
+                        setMessage("");
+                        setError("");
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </form>
+
+              {message && <div className="success-msg">{message}</div>}
+              {error && <div className="error-msg">{error}</div>}
+            </div>
+
+            <TaglineSection />
+
+            <div className="card list-card">
+              <h2>Products</h2>
+
+              {loading ? (
+                <div className="loader">Loading...</div>
+              ) : (
+                <div className="scroll-x">
+                  <table className="product-table">
+                    <thead>
+                      <tr>
+                        <th
+                          className={`sortable ${
+                            sortField === "id"
+                              ? `sort-${sortDirection}`
+                              : ""
+                          }`}
+                          onClick={() => handleSort("id")}
+                        >
+                          ID
+                        </th>
+
+                        <th
+                          className={`sortable ${
+                            sortField === "name"
+                              ? `sort-${sortDirection}`
+                              : ""
+                          }`}
+                          onClick={() => handleSort("name")}
+                        >
+                          Name
+                        </th>
+
+                        <th>Description</th>
+
+                        <th
+                          className={`sortable ${
+                            sortField === "price"
+                              ? `sort-${sortDirection}`
+                              : ""
+                          }`}
+                          onClick={() => handleSort("price")}
+                        >
+                          Price
+                        </th>
+
+                        <th
+                          className={`sortable ${
+                            sortField === "quantity"
+                              ? `sort-${sortDirection}`
+                              : ""
+                          }`}
+                          onClick={() => handleSort("quantity")}
+                        >
+                          Quantity
+                        </th>
+
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {filteredProducts.map((p) => (
+                        <tr key={p.id}>
+                          <td>{p.id}</td>
+                          <td className="name-cell">{p.name}</td>
+                          <td
+                            className="desc-cell"
+                            title={p.description}
+                          >
+                            {p.description}
+                          </td>
+                          <td className="price-cell">
+                            ${currency(p.price)}
+                          </td>
+                          <td>
+                            <span className="qty-badge">
+                              {p.quantity}
+                            </span>
+                          </td>
+
+                          <td>
+                            <div className="row-actions">
+                              <button
+                                className="btn btn-edit"
+                                onClick={() => handleEdit(p)}
+                              >
+                                Edit
+                              </button>
+
+                              <button
+                                className="btn btn-delete"
+                                onClick={() =>
+                                  handleDelete(p.id)
+                                }
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+
+                      {filteredProducts.length === 0 && (
+                        <tr>
+                          <td colSpan={6} className="empty">
+                            No products found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </>
+    )}
+
+  </div>
+);
 }
 
 export default App;
