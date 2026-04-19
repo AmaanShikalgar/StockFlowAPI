@@ -6,7 +6,7 @@ import Register from "./components/Register";
 import TaglineSection from "./TaglineSection";
 
 const api = axios.create({
-  baseURL: "https://stockflowapi-yvbr.onrender.com",
+  baseURL: "https://stockflowapi-1-e2hb.onrender.com",
 });
 
 function App() {
