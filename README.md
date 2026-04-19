@@ -23,25 +23,6 @@
   <img src="./frontend/screenshots/demo.png" width="80%"/>
 </p>
 
-# 🚀 StockFlowAPI
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0ea5e9,100:1e293b&height=200&section=header&text=StockFlowAPI&fontSize=40&fontColor=ffffff&animation=fadeIn" />
-</p>
-
-<p align="center">
-  <b>Secure Full-Stack Inventory Management System</b><br>
-  Built with FastAPI ⚡ PostgreSQL 🐘 SQLAlchemy 🧠 React ⚛️ JWT 🔐
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/FastAPI-0ea5e9?style=for-the-badge&logo=fastapi&logoColor=white"/>
-  <img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white"/>
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
-  <img src="https://img.shields.io/badge/SQLAlchemy-red?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/JWT-Auth-green?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge"/>
-</p>
 
 ## ⚡ Features
 
